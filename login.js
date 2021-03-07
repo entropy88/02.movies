@@ -1,14 +1,14 @@
-
-import {saveCredentialsAndRedirect} from "./saveCredentialsAndRedirect.js"
+import {
+    saveCredentialsAndRedirect
+} from "./saveCredentialsAndRedirect.js"
 
 export function login() {
     let main = document.getElementsByTagName("main")[0];
     main.innerHTML = "";
 
-
     let loginSection = document.createElement("section");
     loginSection.id = "loginSection";
-   loginSection.innerHTML=`
+    loginSection.innerHTML = `
    <form id="loginForm" class="text-center border border-light p-5" action="" method="">
    <div class="form-group">
        <label for="email">Email</label>
@@ -21,9 +21,8 @@ export function login() {
 
    <button type="submit" class="btn btn-primary">Login</button>
 </form>`
-   
-    main.appendChild(loginSection);
 
+    main.appendChild(loginSection);
 
     loginForm.addEventListener("submit", function (e) {
         e.preventDefault();
@@ -51,9 +50,8 @@ export function login() {
 
         fetch("http://localhost:3030/users/login", requestOptions)
             .then(response => response.json())
-            .then(result => saveCredentialsAndRedirect(result,loginSection))
+            .then(result => saveCredentialsAndRedirect(result, loginSection))
             .catch(error => console.log('error', error));
     })
 
-    
 }

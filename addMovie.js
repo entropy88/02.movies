@@ -1,12 +1,14 @@
-import { showMovies } from "./showMovies.js";
+import {
+    showMovies
+} from "./showMovies.js";
 
-export function addMovie(){
+export function addMovie() {
     console.log("addmovie clicked")
     let main = document.getElementsByTagName("main")[0];
     main.innerHTML = "";
 
-    let addMovieSection=document.createElement("section");
-    addMovieSection.innerHTML=`
+    let addMovieSection = document.createElement("section");
+    addMovieSection.innerHTML = `
   
     <form id="addMovieForm" class="text-center border border-light p-5" action="#" method="">
         <h1>Add Movie</h1>
@@ -25,45 +27,48 @@ export function addMovie(){
         <button id="addMovieButton" type="submit" class="btn btn-primary">Submit</button>
     </form>
 `
-main.appendChild(addMovieSection);
+    main.appendChild(addMovieSection);
 
-    let addMovieForm=document.getElementById("addMovieForm");
-    addMovieForm.addEventListener("submit", function(e){
+    let addMovieForm = document.getElementById("addMovieForm");
+    addMovieForm.addEventListener("submit", function (e) {
         e.preventDefault();
-     let formData=new FormData(addMovieForm);
-     submitMovieAndRedirect(formData)
+        let formData = new FormData(addMovieForm);
+        submitMovieAndRedirect(formData)
     })
 
-    function submitMovieAndRedirect(formData){
-        let title=formData.get("title");
-        let description=formData.get("description");
-        let imageUrl=formData.get("imageUrl");
-        let createdBy=sessionStorage.getItem("loggedUserId")
-        if (title.length==0||description.length==0||imageUrl==0){
+    function submitMovieAndRedirect(formData) {
+        let title = formData.get("title");
+        let description = formData.get("description");
+        let imageUrl = formData.get("imageUrl");
+        let createdBy = sessionStorage.getItem("loggedUserId")
+        if (title.length == 0 || description.length == 0 || imageUrl == 0) {
             return alert("All fields are required!")
         }
-        let movieObj={title,description,imageUrl,createdBy}
+        let movieObj = {
+            title,
+            description,
+            img: imageUrl,
+            createdBy
+        }
         console.log(movieObj)
-       
 
         var myHeaders = new Headers();
-myHeaders.append("X-Authorization", sessionStorage.getItem("loggedUserToken"));
-myHeaders.append("Content-Type", "application/json")
+        myHeaders.append("X-Authorization", sessionStorage.getItem("loggedUserToken"));
+        myHeaders.append("Content-Type", "application/json")
 
-var raw = JSON.stringify(movieObj);
+        var raw = JSON.stringify(movieObj);
 
-var requestOptions = {
-  method: 'POST',
-  headers: myHeaders,
-  body: raw,
-  redirect: 'follow'
-};
+        var requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow'
+        };
 
-fetch("http://localhost:3030/data/movies", requestOptions)
-  .then(response => response.json())
-  .then(result => showMovies())
-  .catch(error => console.log('error', error));
+        fetch("http://localhost:3030/data/movies", requestOptions)
+            .then(response => response.json())
+            .then(result => showMovies())
+            .catch(error => console.log('error', error));
     }
-   
 
 }

@@ -2,16 +2,23 @@ import {
     addMovie
 } from "./addMovie.js"
 
-import {movieDetails} from "./movieDetails.js"
+import {
+    movieDetails
+} from "./movieDetails.js"
 export function showMovies() {
-    // let mainContainer = document.getElementById("mainContainer");
-    // mainContainer.style.display = "none";
 
     let main = document.getElementsByTagName("main")[0];
     main.innerHTML = "";
+
     let moviesSection = document.createElement("section");
     moviesSection.id = "moviesSection";
-
+    moviesSection.className = "mt-3";
+    let rowDiv = document.createElement("div");
+    rowDiv.classList = "row d-flex d-wrap";
+    let cardDeckDiv = document.createElement("div");
+    cardDeckDiv.classList = "card-deck d-flex justify-content-center";
+    rowDiv.appendChild(cardDeckDiv);
+    moviesSection.appendChild(rowDiv);
 
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
@@ -32,7 +39,7 @@ export function showMovies() {
         let movies = Object.values(result);
         movies.forEach(m => {
             let movieDiv = document.createElement("div");
-            movieDiv.className = "container";
+            movieDiv.className = "card mb-4";
             movieDiv.id = m._id;
             movieDiv.innerHTML = `
             <div class="card mb-4">
@@ -49,20 +56,16 @@ export function showMovies() {
 
         </div>`
 
-        let detailsButton=movieDiv.querySelector("button");
-        detailsButton.addEventListener("click", function (e){
-            e.preventDefault();
-            movieDetails(m);
-        })
-            moviesSection.appendChild(movieDiv);
-          
-
-
+            let detailsButton = movieDiv.querySelector("button");
+            detailsButton.addEventListener("click", function (e) {
+                e.preventDefault();
+                movieDetails(m);
+            })
+            rowDiv.appendChild(movieDiv);
 
         });
         if (sessionStorage.getItem("loggedUserToken")) {
-            console.log(sessionStorage.getItem("loggedUserToken"))
-            console.log("user is loged display add movie button")
+
             let addMovieLink = document.createElement("section");
             addMovieLink.innerHTML = `   
         <a href="#" id="addMovieLink" class="btn btn-warning ">Add Movie</a>`
@@ -71,6 +74,19 @@ export function showMovies() {
                 addMovie();
             })
             main.appendChild(addMovieLink)
+        } else {
+            //show big banner if user is not logged in
+            let banner = document.createElement("section");
+            banner.innerHTML = `          
+                <div class="jumbotron jumbotron-fluid text-light" style="background-color: #343a40;">
+                    <img src="https://slicksmovieblog.files.wordpress.com/2014/08/cropped-movie-banner-e1408372575210.jpg"
+                        class="img-fluid" alt="Responsive image" style="width: 150%; height: 200px">
+                    <h1 class="display-4">Movies</h1>
+                    <p class="lead">Unlimited movies, TV shows, and more. Watch anywhere. Cancel anytime.</p>
+                </div>
+       `;
+            main.appendChild(banner);
+
         }
 
         main.appendChild(moviesSection);

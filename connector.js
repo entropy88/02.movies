@@ -13,9 +13,12 @@ import {
 
 
 function load() {
-    
+    let userEmail=document.getElementById("userEmail");
+    userEmail.style.display="none";
+   
     let mainContainer = document.getElementById("mainContainer");
     mainContainer.innerHTML = "";
+    
     showMovies();
 
     let home=document.getElementById("home");
@@ -38,7 +41,10 @@ function load() {
         register()
     })
 
-    let logoutLink = document.getElementById("logoutLink");
+    let logoutLink=document.getElementById("logoutLink");
+    logoutLink.style.display="none";
+    userEmail.style.display="none";
+   
     logoutLink.addEventListener("click", function (e) {
         e.preventDefault();
         logout()
@@ -59,7 +65,6 @@ function load() {
               .then(response => response.text())
             .then(result =>console.log(result) )
             .then(function () {
-                    console.log("are we there yet")
                     sessionStorage.clear();
                     console.log("user logged out")
                     loginLink.style.display = "block";

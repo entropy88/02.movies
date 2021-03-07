@@ -1,6 +1,7 @@
 import {showMovies} from "./showMovies.js"
 
 export function saveCredentialsAndRedirect(fulfilledRequest,section){
+    let logoutLink=document.getElementById("logoutLink");
     console.log(fulfilledRequest)
     sessionStorage.setItem("loggedUserId", fulfilledRequest._id);
     sessionStorage.setItem("loggedUserToken", fulfilledRequest.accessToken);
@@ -11,6 +12,8 @@ export function saveCredentialsAndRedirect(fulfilledRequest,section){
     registerLink.style.display = "none";
     let userEmail=document.getElementById("userEmail");
     userEmail.textContent="Welcome, "+fulfilledRequest.email;
+    userEmail.style.display="block";
+    logoutLink.style.display="block";
     //visualise stuff back and hide login
     section.remove()
     showMovies();
