@@ -1,7 +1,6 @@
 
 import {saveCredentialsAndRedirect} from "./saveCredentialsAndRedirect.js"
 export function register() {
-    console.log("hello?")
 
     let main = document.getElementsByTagName("main")[0];
     main.innerHTML = "";
@@ -45,7 +44,7 @@ export function register() {
             email,
             password
         }
-        console.log(requestBody)
+ 
         let b = JSON.stringify(requestBody)
 
         var myHeaders = new Headers();
@@ -63,20 +62,5 @@ export function register() {
             .then(result => saveCredentialsAndRedirect(result,registerSection))
             .catch(error => console.log('error', error));
     })
-
-    // function saveCredentialsAndRedirect(result) {
-    //     console.log(result)
-    //     sessionStorage.setItem("loggedUserId", result._id);
-    //     sessionStorage.setItem("loggedUserToken", result.accessToken);
-    //     sessionStorage.setItem("userIsLogged", "true");
-    //     let loginLink = document.getElementById("loginLink");
-    //     loginLink.style.display = "none";
-    //     let registerLink = document.getElementById("registerLink");
-    //     registerLink.style.display = "none";
-    //     //visualise stuff back and hide login
-    //     registerSection.remove()
-    //     showMovies();
-
-    // }
-
+ 
 }

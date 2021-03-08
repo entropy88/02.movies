@@ -29,15 +29,13 @@ function load() {
 
     let loginLink = document.getElementById("loginLink");
     loginLink.addEventListener("click", function (e) {
-        console.log("login link clicked")
         e.preventDefault();
         login()
     })
 
     let registerLink = document.getElementById("registerLink");
     registerLink.addEventListener("click", function (e) {
-        console.log("register link clicked")
-        e.preventDefault();
+         e.preventDefault();
         register()
     })
 
@@ -51,8 +49,7 @@ function load() {
     })
 
     function logout() {
-        console.log("whatis wrong with you")
-        var myHeaders = new Headers();
+         var myHeaders = new Headers();
         myHeaders.append("X-Authorization", sessionStorage.getItem("loggedUserToken"));
 
         var requestOptions = {

@@ -3,7 +3,7 @@ import {
 } from "./showMovies.js";
 
 export function addMovie() {
-    console.log("addmovie clicked")
+ 
     let main = document.getElementsByTagName("main")[0];
     main.innerHTML = "";
 
@@ -41,16 +41,17 @@ export function addMovie() {
         let description = formData.get("description");
         let imageUrl = formData.get("imageUrl");
         let createdBy = sessionStorage.getItem("loggedUserId")
-        if (title.length == 0 || description.length == 0 || imageUrl == 0) {
+        if (title.length == 0 || description.length == 0 || imageUrl.length == 0) {
             return alert("All fields are required!")
         }
         let movieObj = {
             title,
             description,
             img: imageUrl,
-            createdBy
+            createdBy,
+            likes:[]
+        
         }
-        console.log(movieObj)
 
         var myHeaders = new Headers();
         myHeaders.append("X-Authorization", sessionStorage.getItem("loggedUserToken"));

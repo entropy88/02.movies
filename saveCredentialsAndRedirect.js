@@ -2,10 +2,9 @@ import {showMovies} from "./showMovies.js"
 
 export function saveCredentialsAndRedirect(fulfilledRequest,section){
     let logoutLink=document.getElementById("logoutLink");
-    console.log(fulfilledRequest)
+
     sessionStorage.setItem("loggedUserId", fulfilledRequest._id);
     sessionStorage.setItem("loggedUserToken", fulfilledRequest.accessToken);
-    sessionStorage.setItem("userIsLogged", "true");
     let loginLink = document.getElementById("loginLink");
     loginLink.style.display = "none";
     let registerLink = document.getElementById("registerLink");

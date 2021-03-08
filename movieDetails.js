@@ -2,10 +2,19 @@ import {
     showMovies
 } from "./showMovies.js";
 
-import {editMovie} from "./editMovieModule.js"
+import { like } from "./likeMovie.js"
+
+import { editMovie } from "./editMovieModule.js"
 
 export function movieDetails(m) {
-    console.log(m)
+
+    //add empty likes array to default movies created without the likes property
+    if (!m.hasOwnProperty("likes")){
+        m.likes=[];
+    }
+
+let loggedUserId=sessionStorage.getItem("loggedUserId")    
+
     let main = document.getElementsByTagName("main")[0];
     main.innerHTML = "";
 
@@ -27,7 +36,7 @@ export function movieDetails(m) {
                             <a class="btn btn-danger" href="#">Delete</a>
                             <a class="btn btn-warning" href="#">Edit</a>
                             <a class="btn btn-primary" href="#">Like</a>
-                            <span class="enrolled-span">Liked 1</span>
+                            <span id="likesCount" class="enrolled-span">Liked ${m.likes.length}</span>
                         </div>
                     </div>
                 `
@@ -35,28 +44,43 @@ export function movieDetails(m) {
 
     //edit movie logic
     let editBtn = detailMovieContainer.querySelector(".btn-warning");
-    if (m._ownerId!==sessionStorage.getItem("loggedUserId")){
+    if (m._ownerId !== loggedUserId) {
         editBtn.remove();
     } else {
-        editBtn.addEventListener("click", function (e){
+        editBtn.addEventListener("click", function (e) {
             e.preventDefault();
             editMovie(m)
         })
     }
 
-   
+    //like movie
+    let likesCount = detailMovieContainer.querySelector("#likesCount");
+    let likeBtn = detailMovieContainer.querySelector(".btn-primary");
+    if (loggedUserId==null){
+        likeBtn.remove()
+    }
+    if (m.likes.includes(loggedUserId)) {
+        likeBtn.disabled = true;
+ 
+    } else {
+        likeBtn.disabled = false;
+        likeBtn.addEventListener("click", function (e) {
+            e.preventDefault();
+            like(m, loggedUserId, likesCount, likeBtn)
+        })
+    }
+
 
     //delete movie logic
     let deleteBtn = detailMovieContainer.querySelector(".btn-danger");
-    if (m._ownerId == sessionStorage.getItem("loggedUserId")) {
-
+    if (m._ownerId == loggedUserId) {
 
         deleteBtn.addEventListener("click", function (e) {
             e.preventDefault();
-            console.log(detailMovieContainer.id);
-            console.log(m.createdBy);
-            console.log(sessionStorage.getItem("loggedUserId"))
-            deleteMovie(detailMovieContainer.id, sessionStorage.getItem("loggedUserToken"));
+             let del= confirm("Are you sure?");
+            if (del){
+                deleteMovie(detailMovieContainer.id, sessionStorage.getItem("loggedUserToken"));
+            }           
         })
 
     } else {

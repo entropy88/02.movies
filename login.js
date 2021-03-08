@@ -26,7 +26,6 @@ export function login() {
 
     loginForm.addEventListener("submit", function (e) {
         e.preventDefault();
-        console.log("who");
         let formData = new FormData(loginForm);
         let email = formData.get("email");
         let password = formData.get("password");
@@ -35,7 +34,7 @@ export function login() {
             email,
             password
         }
-        console.log(requestBody)
+  
         let b = JSON.stringify(requestBody)
 
         var myHeaders = new Headers();

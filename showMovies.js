@@ -53,7 +53,6 @@ export function showMovies() {
                     <button type="button" class="btn btn-info">Details</button>
                 </a>
             </div>
-
         </div>`
 
             let detailsButton = movieDiv.querySelector("button");
@@ -64,8 +63,8 @@ export function showMovies() {
             rowDiv.appendChild(movieDiv);
 
         });
+        //show addmovie button if user is logged
         if (sessionStorage.getItem("loggedUserToken")) {
-
             let addMovieLink = document.createElement("section");
             addMovieLink.innerHTML = `   
         <a href="#" id="addMovieLink" class="btn btn-warning ">Add Movie</a>`
